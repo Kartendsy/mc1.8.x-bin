@@ -93,3 +93,17 @@ func (b *BinWriter) WriteBytes(data []byte) error {
 func (b *BinWriter) Reset() {
 	b.buf.Reset()
 }
+
+func (b *BinWriter) WritePacket(packetID int32, payload []byte) error {
+	tempWriter := NewBinWriter()
+	tempWriter.WriteVarInt(packetID)
+	tempWriter.WriteBytes(payload)
+
+	data := tempWriter.Bytes()
+
+	if err := b.WriteVarInt(int32(len(data))); err != nil {
+		return err
+	}
+
+	return b.WriteBytes(data)
+}
