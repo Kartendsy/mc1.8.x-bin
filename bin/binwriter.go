@@ -3,14 +3,27 @@ package bin
 import (
 	"bytes"
 	"encoding/binary"
+	"sync"
 )
 
 type BinWriter struct {
 	buf *bytes.Buffer
 }
 
+var bufferPool = sync.Pool{
+	New: func() interface{} {
+		return new(bytes.Buffer)
+	},
+}
+
 func NewBinWriter() *BinWriter {
-	return &BinWriter{buf: new(bytes.Buffer)}
+	buf := bufferPool.Get().(*bytes.Buffer)
+	buf.Reset()
+	return &BinWriter{buf: buf}
+}
+
+func ReleaseBinWriter(b *BinWriter) {
+	bufferPool.Put(b.buf)
 }
 
 func (b *BinWriter) Bytes() []byte {
