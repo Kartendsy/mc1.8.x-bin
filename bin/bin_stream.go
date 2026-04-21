@@ -113,3 +113,12 @@ func (b *BinStream) ReadBytes(n int) ([]byte, error) {
 	_, err := io.ReadFull(b.r, buf)
 	return buf, err
 }
+
+func (b *BinStream) ReadPacket() ([]byte, int32, error) {
+	len, err := b.ReadVarInt()
+	if err != nil {
+		return nil, 0, err
+	}
+	data, err := b.ReadBytes(int(len))
+	return data, len, err
+}
