@@ -10,7 +10,7 @@ Designed for high performance and ease of use when creating servers or proxies.
 
 ### Installation
 ```bash
-go get [github.com/Kartendsy/mc1.8.x-bin](https://github.com/Kartendsy/mc1.8.x-bin)
+go get [github.com/Kartendsy/mc1.8.x-bin](https://github.com/Kartendsy/mc1.8.x-bin)```
 
 ### 4. Usage Example (Quick Start)
 This is the most important part. Provide a code example that can be directly copied and run.
@@ -34,6 +34,6 @@ writer := bin.NewWriter(buf)
 writer.WriteVarInt(128)
 
 fmt.Printf("Encoded: %x\n", buf.Bytes())
-}
+}```
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/Kartendsy/mc1.8.x-bin.svg)](https://pkg.go.dev/github.com/Kartendsy/mc1.8.x-bin)
