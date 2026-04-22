@@ -80,7 +80,7 @@ func (r *Reader) ReadFloat() (float32, error) {
 	if _, err := io.ReadFull(r.reader, bf[:]); err != nil {
 		return 0, nil
 	}
-	return math.Float32frombits(binary.BigEndian.Uint32(buf[:])), nil
+	return math.Float32frombits(binary.BigEndian.Uint32(bf[:])), nil
 }
 
 func (r *Reader) ReadDouble() (float64, error) {
@@ -88,7 +88,7 @@ func (r *Reader) ReadDouble() (float64, error) {
 	if _, err := io.ReadFull(r.reader, bf[:]); err != nil {
 		return 0, err
 	}
-	return math.Float64frombits(binary.BigEndian.Uint64(buf[:])), nil
+	return math.Float64frombits(binary.BigEndian.Uint64(bf[:])), nil
 }
 
 func (r *Reader) ReadBool() (bool, error) {
