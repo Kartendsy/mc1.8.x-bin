@@ -5,7 +5,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"io"
-	"unsafe"
+	"math"
 )
 
 type Reader struct {
@@ -80,7 +80,7 @@ func (r *Reader) ReadFloat() (float32, error) {
 	if _, err := io.ReadFull(r.reader, bf[:]); err != nil {
 		return 0, nil
 	}
-	return mathFloat32frombits(uint32(binary.BigEndian.Uint64(bf[:]))), nil
+	return math.Float32frombits(binary.BigEndian.Uint32(buf[:])), nil
 }
 
 func (r *Reader) ReadDouble() (float64, error) {
@@ -88,11 +88,8 @@ func (r *Reader) ReadDouble() (float64, error) {
 	if _, err := io.ReadFull(r.reader, bf[:]); err != nil {
 		return 0, err
 	}
-	return mathFloat64frombits(binary.BigEndian.Uint64(bf[:])), nil
+	return math.Float64frombits(binary.BigEndian.Uint64(buf[:])), nil
 }
-
-func mathFloat32frombits(b uint32) float32 { return *(*float32)(unsafe.Pointer(&b)) }
-func mathFloat64frombits(b uint64) float64 { return *(*float64)(unsafe.Pointer(&b)) }
 
 func (r *Reader) ReadBool() (bool, error) {
 	val, err := r.ReadByte()
